@@ -227,6 +227,7 @@ button {
 .page { position: relative; z-index: 1; }
 
 .section { padding: 64px 0; }
+.section--first { padding-top: 104px; }
 
 /* the pill header floats over the page, so anchors need room */
 section[id] { scroll-margin-top: 86px; }
@@ -252,6 +253,12 @@ section[id] { scroll-margin-top: 86px; }
 .eyebrow__num { font-variant-numeric: tabular-nums; color: var(--orange-lit); }
 
 .h-sect { font-size: 27px; margin: 14px 0 10px; }
+
+.h-lead {
+  font-size: 36px;
+  letter-spacing: -0.035em;
+  margin: 14px 0 12px;
+}
 .lede { font-size: 15px; color: var(--txt-2); }
 .accent { color: var(--orange-lit); }
 
@@ -320,86 +327,6 @@ section[id] { scroll-margin-top: 86px; }
   opacity: 0.9;
 }
 
-/* ---------------------------------------------------------------- hero ---- */
-
-.hero { padding: 92px 0 8px; }
-
-.hero h1 {
-  font-size: 40px;
-  letter-spacing: -0.035em;
-  margin-top: 14px;
-}
-
-.hero__sub {
-  margin-top: 16px;
-  font-size: 15.5px;
-  color: var(--txt-2);
-}
-
-.hero__cues { margin-top: 20px; display: flex; flex-wrap: wrap; gap: 8px; }
-
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  padding: 8px 13px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--txt-2);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--glass-line);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-}
-
-.chip--hot {
-  color: #ffd2ad;
-  background: rgba(237, 107, 6, 0.15);
-  border-color: rgba(241, 114, 35, 0.34);
-}
-
-.hero__lens { position: relative; margin-top: 26px; }
-
-.lens-card {
-  position: relative;
-  border-radius: var(--r-xl);
-  overflow: hidden;
-  padding: 22px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  background:
-    linear-gradient(150deg, rgba(237, 107, 6, 0.24), rgba(88, 76, 214, 0.15) 48%, rgba(255, 255, 255, 0.04)),
-    rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--glass-line);
-}
-
-.lens-card__rows { display: grid; gap: 11px; }
-
-.lens-row {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
-}
-
-.lens-row:last-child { border-bottom: 0; padding-bottom: 0; }
-.lens-row__k { font-size: 12.5px; color: var(--txt-2); }
-
-.lens-row__v {
-  font-family: "Inter Tight", sans-serif;
-  font-size: 22px;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
-}
-
-.lens-hint { font-size: 11.5px; color: var(--txt-3); display: flex; align-items: center; gap: 7px; }
-
 /* ------------------------------------------------------------- results ---- */
 
 .results { display: grid; gap: 14px; margin-top: 24px; }
@@ -466,28 +393,7 @@ section[id] { scroll-margin-top: 86px; }
 
 .rcard__count { font-size: 11.5px; color: var(--txt-3); }
 
-/* ---------------------------------------------------------------- ready --- */
-
-.ready { display: grid; gap: 14px; margin-top: 24px; }
-.ready-card { padding: 22px 20px; display: flex; flex-direction: column; gap: 13px; }
-
-.ready-card__badge {
-  align-self: flex-start;
-  font-size: 10px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: #b9f0cd;
-  background: rgba(52, 199, 123, 0.14);
-  border: 1px solid rgba(52, 199, 123, 0.3);
-  padding: 5px 11px;
-  border-radius: 999px;
-}
-
-.ready-card h3 { font-size: 21px; }
-.ready-card p { font-size: 13.5px; color: var(--txt-2); }
-.ready-card__acts { display: grid; gap: 9px; }
-.ready-card__acts .btn { width: 100%; }
+/* ----------------------------------------------------------------- btn --- */
 
 .btn {
   display: inline-flex;
@@ -522,6 +428,108 @@ section[id] { scroll-margin-top: 86px; }
 .btn--wide { width: 100%; }
 .btn--soon { opacity: 0.55; }
 .btn--soon:active { transform: none; }
+
+
+/* ------------------------------------------------------------- spotlight -- */
+
+.spot-intro { margin-top: 52px; }
+.spots { display: grid; gap: 14px; margin-top: 24px; }
+
+.spot {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding: 22px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-radius: var(--r-lg);
+  background:
+    linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.025) 55%),
+    rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--glass-line);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.2),
+    0 14px 40px -16px rgba(0, 0, 0, 0.75);
+}
+
+/* The three that carry the offer glow in the brand orange. */
+.spot--hero {
+  background:
+    linear-gradient(158deg, rgba(237, 107, 6, 0.2) 0%, rgba(237, 107, 6, 0.05) 42%, rgba(255, 255, 255, 0.03) 100%),
+    rgba(255, 255, 255, 0.02);
+  border-color: rgba(241, 114, 35, 0.34);
+  box-shadow:
+    inset 0 1px 0 0 rgba(255, 255, 255, 0.26),
+    0 0 0 1px rgba(237, 107, 6, 0.08),
+    0 20px 52px -18px rgba(0, 0, 0, 0.8),
+    0 10px 44px -24px rgba(237, 107, 6, 0.75);
+}
+
+/* A light running along the top edge, like a highlight on wet glass. */
+.spot__sheen {
+  position: absolute;
+  top: 0;
+  left: 12%;
+  right: 12%;
+  height: 1px;
+  z-index: -1;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.75), transparent);
+}
+
+.spot--hero .spot__sheen {
+  background: linear-gradient(90deg, transparent, var(--orange-soft), transparent);
+}
+
+.spot__head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+
+.spot__kicker {
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffd2ad;
+  background: rgba(237, 107, 6, 0.18);
+  border: 1px solid rgba(241, 114, 35, 0.36);
+  padding: 6px 12px;
+  border-radius: 999px;
+}
+
+.spot:not(.spot--hero) .spot__kicker {
+  color: var(--txt-2);
+  background: rgba(255, 255, 255, 0.06);
+  border-color: var(--glass-line);
+}
+
+.spot__ready {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #b9f0cd;
+  background: rgba(52, 199, 123, 0.14);
+  border: 1px solid rgba(52, 199, 123, 0.32);
+  padding: 5px 11px;
+  border-radius: 999px;
+}
+
+.spot__name { font-size: 25px; letter-spacing: -0.03em; }
+.spot:not(.spot--hero) .spot__name { font-size: 21px; }
+.spot__line { font-size: 14px; color: var(--txt-2); }
+
+.spot__note {
+  font-size: 13px;
+  color: var(--txt-2);
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  background: rgba(0, 0, 0, 0.22);
+  border-left: 2px solid var(--orange-lit);
+}
+
+.spot__acts { display: grid; gap: 9px; margin-top: 4px; }
+.spot__acts .btn { width: 100%; }
 
 /* ------------------------------------------------------------- projects --- */
 

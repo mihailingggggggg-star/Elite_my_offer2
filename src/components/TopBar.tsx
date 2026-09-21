@@ -13,8 +13,8 @@ export function TopBar() {
           <img src={logo} alt="Elite House" />
           <span className="topbar__tag">Маркетинг</span>
         </a>
-        <a className="topbar__jump" href="#results">
-          Гарантии <ArrowRight />
+        <a className="topbar__jump" href="#projects">
+          Проекты <ArrowRight />
         </a>
         <motion.div className="topbar__progress" style={{ scaleX: bar }} />
       </div>

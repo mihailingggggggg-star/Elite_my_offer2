@@ -6,23 +6,20 @@ import {
   projectById,
   projects,
   results,
+  spotlight,
   type Project,
   type Result,
 } from "./data/offer";
 import { Scene } from "./components/Scene";
 import { TopBar } from "./components/TopBar";
-import { Hero } from "./components/Hero";
 import { Reveal } from "./components/Reveal";
+import { SpotCard } from "./components/Spotlight";
 import { ResultSheet } from "./components/ResultSheet";
 import { ProjectSheet } from "./components/ProjectSheet";
-import { ArrowRight, External } from "./components/Icons";
+import { ArrowRight } from "./components/Icons";
 import logo from "./assets/elite-house-logo.svg";
 
-const tagFor = (p: Project) =>
-  p.scale === "big" ? "Крупный проект" : p.scale === "ready" ? "Готово" : "Проект";
-
-const tagClass = (p: Project) =>
-  p.scale === "big" ? "tag tag--big" : p.scale === "ready" ? "tag tag--ready" : "tag";
+const spotIds = new Set(spotlight.map((s) => s.projectId));
 
 export default function App() {
   /** Funnel state: a result opens level 1, a project stacks level 2 on top. */
@@ -52,9 +49,8 @@ export default function App() {
   }, [project, result]);
 
   const org = projectById("org-okr");
-  const readyProjects = projects.filter((p) => p.scale === "ready");
-  const coreProjects = projects.filter((p) => p.scale === "core");
-  const bigProjects = projects.filter((p) => p.scale === "big");
+  /** Everything the spotlight already covers is not repeated in the grid. */
+  const rest = projects.filter((p) => !spotIds.has(p.id));
 
   return (
     <>
@@ -62,19 +58,20 @@ export default function App() {
       <TopBar />
 
       <main className="page">
-        <Hero />
-
-        {/* ---------------------------------------------------- 01 гарантии */}
-        <section className="section" id="results">
+        {/* --------------------------------------------------- результаты */}
+        <section className="section section--first" id="results">
           <div className="shell">
-            <Reveal>
+            <Reveal y={16}>
               <span className="eyebrow">
-                <span className="eyebrow__num">01</span> Что гарантирую
+                <span className="eyebrow__dot" />
+                Elite House · Бишкек
               </span>
-              <h2 className="h-sect">Четыре цифры. Нажмите на любую.</h2>
+              <h2 className="h-lead">
+                Результаты, которые <span className="grad-num">обещаю</span>.
+              </h2>
               <p className="lede">
-                Внутри — методы и все проекты, из которых собирается результат,
-                с процентом влияния каждого.
+                Нажмите на любую цифру — внутри проекты, из которых она
+                складывается, с процентом влияния каждого.
               </p>
             </Reveal>
 
@@ -96,7 +93,7 @@ export default function App() {
                     <p className="rcard__plain">{r.plain}</p>
                     <div className="rcard__foot">
                       <span className="rcard__cta">
-                        Как этого добьюсь <ArrowRight />
+                        Из чего складывается <ArrowRight />
                       </span>
                       <span className="rcard__count">{r.mix.length} проектов</span>
                     </div>
@@ -104,106 +101,58 @@ export default function App() {
                 </Reveal>
               ))}
             </div>
-          </div>
-        </section>
 
-        {/* ------------------------------------------------- 02 уже готово */}
-        <section className="section" id="ready">
-          <div className="shell">
-            <Reveal>
-              <span className="eyebrow">
-                <span className="eyebrow__num">02</span> Уже готово
-              </span>
-              <h2 className="h-sect">Сайт и приложение можно открыть сейчас.</h2>
-              <p className="lede">
-                Это не планы. Это работающие продукты — их достаточно внедрить.
-              </p>
-            </Reveal>
+            {/* ------------------------------------------------- главное */}
+            <div className="spot-intro">
+              <Reveal y={16}>
+                <span className="eyebrow">
+                  <span className="eyebrow__dot" />
+                  Главное
+                </span>
+                <h2 className="h-sect">Приложение, сайт и МБАНК.</h2>
+                <p className="lede">
+                  Первые два можно открыть прямо сейчас. Третий — договорённость,
+                  которой нет ни у одного конкурента.
+                </p>
+              </Reveal>
+            </div>
 
-            <div className="ready">
-              {readyProjects.map((p, i) => (
-                <Reveal key={p.id} delay={i * 0.08}>
-                  <div className="glass ready-card">
-                    <span className="ready-card__badge">Готово</span>
-                    <h3>{p.title}</h3>
-                    <p>{p.value}</p>
-                    <div className="ready-card__acts">
-                      {p.link && p.link.url !== "#" ? (
-                        <a
-                          className="btn btn--fill"
-                          href={p.link.url}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <External /> {p.link.label}
-                        </a>
-                      ) : (
-                        <span className="btn btn--ghost btn--soon">
-                          <External /> {p.link?.note}
-                        </span>
-                      )}
-                      <button className="btn btn--ghost" onClick={() => setProject(p)}>
-                        Что внутри <ArrowRight />
-                      </button>
-                    </div>
-                  </div>
-                </Reveal>
+            <div className="spots">
+              {spotlight.map((s, i) => (
+                <SpotCard
+                  key={s.projectId}
+                  spot={s}
+                  project={projectById(s.projectId)}
+                  index={i}
+                  onOpen={() => setProject(projectById(s.projectId))}
+                />
               ))}
             </div>
           </div>
         </section>
 
-        {/* -------------------------------------------------- 03 проекты */}
+        {/* ------------------------------------------------------ проекты */}
         <section className="section" id="projects">
           <div className="shell">
             <Reveal>
               <span className="eyebrow">
-                <span className="eyebrow__num">03</span> Все проекты
+                <span className="eyebrow__dot" />
+                Остальные проекты
               </span>
-              <h2 className="h-sect">Из чего складываются цифры.</h2>
+              <h2 className="h-sect">Из чего ещё складываются цифры.</h2>
               <p className="lede">
-                {projects.length} проектов. В каждом — состав, сроки, примеры и
-                что замеряем.
+                В каждом — состав, сроки, примеры и что замеряем.
               </p>
             </Reveal>
 
             <div className="pgrid">
-              {coreProjects.map((p, i) => (
+              {rest.map((p, i) => (
                 <Reveal key={p.id} delay={Math.min(i, 5) * 0.05}>
                   <button className="glass glass--tap pcard" onClick={() => setProject(p)}>
                     <div className="pcard__head">
-                      <span className={tagClass(p)}>{tagFor(p)}</span>
-                      <span className="pcard__time">{p.duration}</span>
-                    </div>
-                    <h3>{p.title}</h3>
-                    <p className="pcard__short">{p.short}</p>
-                    <span className="pcard__foot">
-                      Раскрыть <ArrowRight />
-                    </span>
-                  </button>
-                </Reveal>
-              ))}
-            </div>
-
-            <Reveal>
-              <div style={{ marginTop: 40 }}>
-                <span className="eyebrow">
-                  <span className="eyebrow__dot" /> Крупные проекты
-                </span>
-                <h2 className="h-sect">Две ставки на другой масштаб.</h2>
-                <p className="lede">
-                  Дольше и сложнее остальных. Дают компании то, чего сейчас нет
-                  ни у кого на рынке.
-                </p>
-              </div>
-            </Reveal>
-
-            <div className="pgrid">
-              {bigProjects.map((p, i) => (
-                <Reveal key={p.id} delay={i * 0.08}>
-                  <button className="glass glass--tap pcard" onClick={() => setProject(p)}>
-                    <div className="pcard__head">
-                      <span className={tagClass(p)}>{tagFor(p)}</span>
+                      <span className={p.scale === "big" ? "tag tag--big" : "tag"}>
+                        {p.scale === "big" ? "Крупный проект" : "Проект"}
+                      </span>
                       <span className="pcard__time">{p.duration}</span>
                     </div>
                     <h3>{p.title}</h3>
@@ -218,12 +167,13 @@ export default function App() {
           </div>
         </section>
 
-        {/* ---------------------------------------------------- 04 команда */}
+        {/* ------------------------------------------------------ команда */}
         <section className="section" id="team">
           <div className="shell">
             <Reveal>
               <span className="eyebrow">
-                <span className="eyebrow__num">04</span> Управление командой
+                <span className="eyebrow__dot" />
+                Управление командой
               </span>
               <h2 className="h-sect">Отдел на 7 человек, спринты и OKR.</h2>
               <p className="lede">
@@ -329,7 +279,7 @@ export default function App() {
         </section>
       </main>
 
-      {/* ------------------------------------------------------ воронка */}
+      {/* -------------------------------------------------------- воронка */}
       <AnimatePresence>
         {open && (
           <motion.div

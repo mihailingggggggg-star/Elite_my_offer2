@@ -74,7 +74,7 @@ export function Block({
   hint,
   children,
 }: {
-  n: string;
+  n?: string;
   title: string;
   hint?: string;
   children: ReactNode;
@@ -82,9 +82,11 @@ export function Block({
   return (
     <section>
       <div className="block__head">
-        <span className="eyebrow">
-          <span className="eyebrow__num">{n}</span>
-        </span>
+        {n && (
+          <span className="eyebrow">
+            <span className="eyebrow__num">{n}</span>
+          </span>
+        )}
         <h3>{title}</h3>
         {hint && <span className="block__hint">{hint}</span>}
       </div>

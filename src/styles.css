@@ -1011,6 +1011,11 @@ section[id] { scroll-margin-top: 86px; }
 
 .foot img { height: 20px; opacity: 0.7; justify-self: start; }
 
+.foot__build {
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.3);
+}
+
 /* --------------------------------------------------- very small phones ---- */
 
 @media (max-width: 370px) {

@@ -272,9 +272,8 @@ export default function App() {
 
             <div className="foot">
               <img src={logo} alt="Elite House" />
-              <span>
-                Предложение по маркетингу · Бишкек · {new Date().getFullYear()}
-              </span>
+              <span>Предложение по маркетингу · Бишкек</span>
+              <span className="foot__build">Версия от {__BUILD_TIME__}</span>
             </div>
           </div>
         </section>

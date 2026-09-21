@@ -81,6 +81,7 @@ export default function App() {
                   <button className="glass glass--tap rcard" onClick={() => setResult(r)}>
                     <div className="rcard__top">
                       <span className="rcard__num grad-num">
+                        {r.prefix && <span className="rcard__pre">{r.prefix}</span>}
                         {r.value}
                         <span className="rcard__unit">{r.unit}</span>
                       </span>

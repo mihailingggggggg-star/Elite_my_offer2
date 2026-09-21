@@ -22,6 +22,7 @@ export function ResultSheet({
       title={
         <>
           <span className="grad-num">
+            {result.prefix ? `${result.prefix} ` : ""}
             {result.value}
             {result.unit}
           </span>{" "}

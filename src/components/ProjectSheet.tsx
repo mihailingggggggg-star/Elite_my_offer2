@@ -42,6 +42,7 @@ export function ProjectSheet({
               <button onClick={onBack}>
                 ←{" "}
                 <span>
+                  {from.prefix ? `${from.prefix} ` : ""}
                   {from.value}
                   {from.unit} · {from.label}
                 </span>
@@ -161,6 +162,7 @@ export function ProjectSheet({
         <div className="backlinks">
           {feeds.map((f) => (
             <button className="backlink" key={f.result.id} onClick={() => onPickResult(f.result.id)}>
+              {f.result.prefix ? `${f.result.prefix} ` : ""}
               {f.result.value}
               {f.result.unit} {f.result.label} · {f.weight}% <ArrowRight />
             </button>
